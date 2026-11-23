@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="TestingPlatform.Application/TestingPlatform.Application.csproj" Id="a4a660bc-d900-4f81-942a-2f7c891d4b77" />
+  <Project Path="TestingPlatform.Domain/TestingPlatform.Domain.csproj" Id="d4d1b85e-d1b0-4a9a-87d2-2dd38406a49b" />
+  <Project Path="TestingPlatform.Infrastructure/TestingPlatform.Infrastructure.csproj" Id="7c152f42-7a28-44fe-9897-e89b4e6f3126" />
+  <Project Path="TestingPlatform.Tests/TestingPlatform.Tests.csproj" />
+  <Project Path="TestingPlatform/TestingPlatform.csproj" />
+</Solution>

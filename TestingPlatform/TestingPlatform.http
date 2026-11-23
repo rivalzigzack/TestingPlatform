@@ -1,0 +1,86 @@
+@host = http://localhost:1080
+
+### Урок 1: маршрут
+GET {{host}}/WeatherForecast/7
+
+### Урок 1: query
+GET {{host}}/WeatherForecast/filter?minTemp=0&maxTemp=20
+
+### Урок 1: заголовки
+GET {{host}}/WeatherForecast/check-header
+X-Client: student
+
+### Сначала узнайте id справочников и групп
+GET {{host}}/api/references
+
+###
+GET {{host}}/api/groups
+
+### Создание студента (пароль передаётся только на запись)
+POST {{host}}/api/students
+Content-Type: application/json
+
+{
+  "login": "test_user",
+  "password": "password",
+  "email": "test_user@example.com",
+  "firstName": "Иван",
+  "middleName": "Иванович",
+  "lastName": "Иванов",
+  "phone": "+79991234567",
+  "vkProfileLink": "https://vk.com/test_user",
+  "groupIds": [1]
+}
+
+### Создание теста: подставьте существующий id студента
+POST {{host}}/api/tests
+Content-Type: application/json
+
+{
+  "title": "Основы C#",
+  "description": "Тест для проверки назначения",
+  "isRepeatable": true,
+  "type": 1,
+  "publishedAt": "2026-01-01T00:00:00Z",
+  "deadline": "2030-01-01T00:00:00Z",
+  "durationMinutes": 30,
+  "passingScore": 5,
+  "maxAttempts": 3,
+  "students": [1],
+  "groups": [],
+  "courses": [],
+  "projects": [],
+  "directions": []
+}
+
+### Все тесты менеджера с фильтрами
+GET {{host}}/api/tests/manage?isPublic=true&studentIds=1
+
+### Активные назначенные тесты студента
+GET {{host}}/api/tests/student/1
+
+### LINQ: GroupBy, Average, SelectMany, Distinct, OrderBy, Take
+GET {{host}}/api/tests/statistics?top=10
+
+### Последние опубликованные
+GET {{host}}/api/tests/recent?count=5
+
+### Создать вопрос (подставьте id теста)
+POST {{host}}/api/questions
+Content-Type: application/json
+
+{
+  "text": "Что такое переменная?",
+  "number": 1,
+  "description": "Напишите ответ в свободной форме",
+  "answerType": 3,
+  "isScoring": false,
+  "maxScore": 0,
+  "testId": 1
+}
+
+###
+GET {{host}}/api/questions/by-test/1
+
+### Ошибка 404 обрабатывается middleware и записывается в лог
+GET {{host}}/api/questions/2147483647

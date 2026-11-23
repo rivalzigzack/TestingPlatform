@@ -1,0 +1,10 @@
+**/bin/
+**/obj/
+.vs/
+.vscode/
+**/logs/
+**/TestResults/
+**/*.db
+**/*.db-shm
+**/*.db-wal
+*.csproj.user
