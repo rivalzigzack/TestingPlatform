@@ -9,7 +9,6 @@ public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddlewa
         try { await next(context); }
         catch (Exception ex) when (!context.Response.HasStarted)
         {
-            logger.LogError(ex, "Ошибка запроса {Method} {Path}", context.Request.Method, context.Request.Path);
             var (status, message) = ex switch
             {
                 EntityNotFoundException => (404, ex.Message),
@@ -19,6 +18,8 @@ public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddlewa
                     => (409, "Операция нарушает уникальность или связи данных."),
                 _ => (500, "Произошла внутренняя ошибка сервера.")
             };
+            logger.LogError(ex, "Ошибка запроса {Method} {Path}. Код ответа {StatusCode}, идентификатор {TraceId}",
+                context.Request.Method, context.Request.Path, status, context.TraceIdentifier);
             context.Response.Clear();
             context.Response.StatusCode = status;
             await context.Response.WriteAsJsonAsync(new { message, statusCode = status, traceId = context.TraceIdentifier });
